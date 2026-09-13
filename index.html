@@ -1,0 +1,495 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>IR Career Fair — Field Plan · Ishaan Naik</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@600;700;800&family=Source+Sans+3:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --navy:#0F2A43;
+    --navy-deep:#0A1F33;
+    --line:#3C6588;
+    --line-soft:#264A67;
+    --paper:#F3EEE2;
+    --paper-dim:#E7E0D0;
+    --ink:#16232D;
+    --orange:#E8590C;
+    --orange-soft:#F2895A;
+    --white-blue:#D9E6F2;
+  }
+
+  *{box-sizing:border-box;}
+
+  body{
+    margin:0;
+    background:var(--navy);
+    background-image:
+      linear-gradient(var(--line-soft) 1px, transparent 1px),
+      linear-gradient(90deg, var(--line-soft) 1px, transparent 1px);
+    background-size:28px 28px;
+    color:var(--white-blue);
+    font-family:'Source Sans 3', sans-serif;
+    font-size:16px;
+    line-height:1.55;
+    padding:32px 16px 80px;
+  }
+
+  h1,h2,h3{
+    font-family:'Big Shoulders Display', sans-serif;
+    font-weight:800;
+    letter-spacing:0.01em;
+    margin:0;
+  }
+
+  .sheet{
+    max-width:760px;
+    margin:0 auto;
+  }
+
+  /* ===== Title block ===== */
+  .titleblock{
+    border:2px solid var(--white-blue);
+    padding:22px 24px;
+    margin-bottom:28px;
+    position:relative;
+    background:rgba(15,42,67,0.4);
+  }
+  .titleblock::before{
+    content:"";
+    position:absolute;
+    top:6px;left:6px;right:6px;bottom:6px;
+    border:1px solid var(--line);
+    pointer-events:none;
+  }
+  .titleblock h1{
+    font-size:clamp(28px,5vw,42px);
+    color:#fff;
+    line-height:1;
+  }
+  .titleblock .sub{
+    color:var(--orange-soft);
+    font-size:14px;
+    text-transform:uppercase;
+    letter-spacing:0.12em;
+    margin-top:6px;
+  }
+  .meta-row{
+    display:flex;
+    flex-wrap:wrap;
+    gap:18px;
+    margin-top:18px;
+    font-size:14px;
+  }
+  .meta-cell{
+    border-left:2px solid var(--line);
+    padding-left:10px;
+  }
+  .meta-cell .label{
+    display:block;
+    color:var(--line);
+    font-size:11px;
+    text-transform:uppercase;
+    letter-spacing:0.1em;
+  }
+  .meta-cell .value{
+    color:var(--white-blue);
+  }
+
+  /* ===== Progress gauge ===== */
+  .gauge-wrap{
+    display:flex;
+    align-items:center;
+    gap:16px;
+    margin-top:20px;
+  }
+  .gauge-track{
+    flex:1;
+    height:14px;
+    border:1.5px solid var(--white-blue);
+    position:relative;
+    background:repeating-linear-gradient(90deg, transparent, transparent 9px, var(--line-soft) 9px, var(--line-soft) 10px);
+  }
+  .gauge-fill{
+    height:100%;
+    width:0%;
+    background:var(--orange);
+    transition:width 0.35s ease;
+  }
+  .gauge-pct{
+    font-family:'Big Shoulders Display', sans-serif;
+    font-weight:700;
+    font-size:20px;
+    color:#fff;
+    min-width:56px;
+    text-align:right;
+  }
+
+  /* ===== Phase sheet ===== */
+  .phase{
+    border:2px solid var(--line);
+    background:rgba(10,31,51,0.55);
+    margin-bottom:22px;
+  }
+  .phase-head{
+    display:flex;
+    align-items:baseline;
+    gap:14px;
+    padding:14px 18px;
+    border-bottom:2px solid var(--line);
+    background:rgba(60,101,136,0.18);
+  }
+  .phase-num{
+    font-family:'Big Shoulders Display', sans-serif;
+    font-weight:800;
+    font-size:32px;
+    color:var(--orange);
+    line-height:1;
+  }
+  .phase-title{
+    font-size:20px;
+    color:#fff;
+    text-transform:uppercase;
+    letter-spacing:0.02em;
+  }
+  .phase-tag{
+    margin-left:auto;
+    font-size:12px;
+    color:var(--line);
+    text-transform:uppercase;
+    letter-spacing:0.08em;
+    white-space:nowrap;
+  }
+  .phase-body{
+    padding:16px 18px 18px;
+  }
+
+  /* ===== Checklist rows ===== */
+  .item{
+    display:flex;
+    align-items:flex-start;
+    gap:12px;
+    padding:9px 0;
+    border-bottom:1px dashed var(--line-soft);
+  }
+  .item:last-child{border-bottom:none;}
+
+  .box{
+    flex:0 0 20px;
+    width:20px;
+    height:20px;
+    border:2px solid var(--white-blue);
+    margin-top:2px;
+    position:relative;
+    cursor:pointer;
+    background:transparent;
+  }
+  .box::before,.box::after{
+    content:"";
+    position:absolute;
+    background:var(--orange);
+    opacity:0;
+    transition:opacity 0.15s ease;
+  }
+  .box.checked{
+    border-color:var(--orange);
+    background:rgba(232,89,12,0.12);
+  }
+  .box.checked::before{
+    opacity:1;
+    width:2px; height:70%;
+    left:5px; top:12%;
+    transform:rotate(45deg);
+  }
+  .box.checked::after{
+    opacity:1;
+    width:2px; height:130%;
+    left:14px; top:-15%;
+    transform:rotate(-45deg);
+  }
+
+  .item label{
+    cursor:pointer;
+    color:var(--white-blue);
+    padding-top:1px;
+  }
+  .item.checked label{
+    color:var(--line);
+    text-decoration:line-through;
+    text-decoration-color:var(--orange);
+  }
+
+  /* ===== Pitch cards ===== */
+  .pitch-card{
+    border:1.5px solid var(--white-blue);
+    padding:16px;
+    margin:10px 0 16px;
+    background:rgba(243,238,226,0.05);
+    position:relative;
+  }
+  .pitch-label{
+    font-size:11px;
+    text-transform:uppercase;
+    letter-spacing:0.1em;
+    color:var(--orange-soft);
+    margin-bottom:8px;
+  }
+  .pitch-text{
+    color:#fff;
+    font-size:15px;
+    line-height:1.65;
+  }
+  .copy-btn{
+    margin-top:12px;
+    background:transparent;
+    border:1.5px solid var(--orange);
+    color:var(--orange-soft);
+    font-family:'Source Sans 3', sans-serif;
+    font-weight:600;
+    font-size:13px;
+    padding:7px 14px;
+    cursor:pointer;
+    text-transform:uppercase;
+    letter-spacing:0.06em;
+  }
+  .copy-btn:hover{
+    background:var(--orange);
+    color:#fff;
+  }
+  .copy-btn.copied{
+    background:var(--orange);
+    color:#fff;
+  }
+
+  /* ===== Dossier fill-in template ===== */
+  .dossier{
+    border:1.5px dashed var(--white-blue);
+    padding:16px;
+    margin-bottom:14px;
+  }
+  .dossier .field{
+    margin-bottom:10px;
+  }
+  .dossier .field .flabel{
+    display:block;
+    font-size:11px;
+    text-transform:uppercase;
+    letter-spacing:0.08em;
+    color:var(--line);
+    margin-bottom:4px;
+  }
+  .dossier input[type=text], .dossier textarea{
+    width:100%;
+    background:rgba(0,0,0,0.15);
+    border:1px solid var(--line);
+    color:#fff;
+    font-family:'Source Sans 3', sans-serif;
+    font-size:14px;
+    padding:7px 9px;
+  }
+  .dossier textarea{resize:vertical; min-height:44px;}
+  .role-options{
+    display:flex; gap:16px; flex-wrap:wrap; font-size:14px;
+  }
+  .role-options label{display:flex; align-items:center; gap:6px; cursor:pointer;}
+
+  .note{
+    font-size:13px;
+    color:var(--line);
+    margin-top:6px;
+    font-style:italic;
+  }
+
+  footer{
+    max-width:760px;
+    margin:24px auto 0;
+    text-align:center;
+    font-size:12px;
+    color:var(--line);
+    text-transform:uppercase;
+    letter-spacing:0.1em;
+  }
+
+  @media print{
+    body{background:#fff; color:#000;}
+  }
+</style>
+</head>
+<body>
+<div class="sheet">
+
+  <div class="titleblock">
+    <div class="sub">Career Fair Field Plan</div>
+    <h1>Ishaan Naik</h1>
+    <div class="meta-row">
+      <div class="meta-cell"><span class="label">Event</span><span class="value">Industrial Roundtable, Purdue</span></div>
+      <div class="meta-cell"><span class="label">In-Person</span><span class="value">Sept 15–16 · Memorial Mall</span></div>
+      <div class="meta-cell"><span class="label">Virtual</span><span class="value">Sept 17</span></div>
+      <div class="meta-cell"><span class="label">Info Sessions</span><span class="value">Virtual Sept 10 · In-person Sept 14</span></div>
+    </div>
+    <div class="gauge-wrap">
+      <div class="gauge-track"><div class="gauge-fill" id="gaugeFill"></div></div>
+      <div class="gauge-pct" id="gaugePct">0%</div>
+    </div>
+  </div>
+
+  <!-- PHASE 01 -->
+  <div class="phase">
+    <div class="phase-head">
+      <div class="phase-num">01</div>
+      <div class="phase-title">Recon</div>
+      <div class="phase-tag">Before Sept 14</div>
+    </div>
+    <div class="phase-body">
+      <div class="item"><div class="box"></div><label>Pull the IR exhibitor list and shortlist 15–20 companies hiring construction / civil engineers</label></div>
+      <div class="item"><div class="box"></div><label>Sort target companies by day — in-person Sept 15–16 vs. virtual Sept 17 — and map a route</label></div>
+      <div class="item"><div class="box"></div><label>Register for and attend Sept 14 in-person info sessions for top 3–4 targets</label></div>
+      <div class="item"><div class="box"></div><label>Register for Sept 10 virtual info sessions for any remaining targets</label></div>
+      <div class="item"><div class="box"></div><label>Build a one-page dossier for each priority company (template in Phase 03)</label></div>
+      <div class="item"><div class="box"></div><label>Update LinkedIn headline + About section to reflect current job search focus</label></div>
+      <div class="item"><div class="box"></div><label>Confirm resume shows current Hill International role and correct dates</label></div>
+    </div>
+  </div>
+
+  <!-- PHASE 02 -->
+  <div class="phase">
+    <div class="phase-head">
+      <div class="phase-num">02</div>
+      <div class="phase-title">Materials &amp; Logistics</div>
+      <div class="phase-tag">Night before</div>
+    </div>
+    <div class="phase-body">
+      <div class="item"><div class="box"></div><label>Print 15–20 clean resume copies — no folds, quality paper</label></div>
+      <div class="item"><div class="box"></div><label>Save a digital PDF of the resume for QR drop-offs / email on the spot</label></div>
+      <div class="item"><div class="box"></div><label>Pack a resume folder or portfolio — no digging through a backpack</label></div>
+      <div class="item"><div class="box"></div><label>Charge phone and save LinkedIn QR code to the home screen</label></div>
+      <div class="item"><div class="box"></div><label>Pack a small notebook to log names and notes after each conversation</label></div>
+      <div class="item"><div class="box"></div><label>Lay out business-professional attire the night before</label></div>
+    </div>
+  </div>
+
+  <!-- PHASE 03 -->
+  <div class="phase">
+    <div class="phase-head">
+      <div class="phase-num">03</div>
+      <div class="phase-title">Company Dossier</div>
+      <div class="phase-tag">Repeat per target</div>
+    </div>
+    <div class="phase-body">
+      <p style="margin:0 0 12px; color:var(--white-blue); font-size:14px;">Fill one of these in for every priority company before you walk up to the booth. Most construction firms are service-based, not product-based — the useful question is what they build and how they deliver it.</p>
+      <div class="dossier">
+        <div class="field"><span class="flabel">Company</span><input type="text" placeholder="e.g. Turner Construction"></div>
+        <div class="field"><span class="flabel">Service-based or product-based? What they actually build</span><textarea placeholder="Sectors: commercial / healthcare / data centers / infrastructure. Self-perform or act as CM/GC?"></textarea></div>
+        <div class="field"><span class="flabel">Notable recent projects (from their site)</span><input type="text" placeholder="e.g. regional data center campus, hospital expansion..."></div>
+        <div class="field">
+          <span class="flabel">Roles open</span>
+          <div class="role-options">
+            <label><input type="checkbox"> Co-op</label>
+            <label><input type="checkbox"> Summer Internship</label>
+            <label><input type="checkbox"> Full-Time / New Grad</label>
+          </div>
+        </div>
+        <div class="field"><span class="flabel">2 questions to ask (not googleable)</span><textarea placeholder="e.g. What does onboarding look like for a Field Engineer in the first 6 months?"></textarea></div>
+      </div>
+      <div class="item"><div class="box"></div><label>Researched company type and sectors for every priority target</label></div>
+      <div class="item"><div class="box"></div><label>Identified which roles each company is actually hiring for</label></div>
+      <div class="item"><div class="box"></div><label>Wrote 2 tailored questions per company</label></div>
+    </div>
+  </div>
+
+  <!-- PHASE 04 -->
+  <div class="phase">
+    <div class="phase-head">
+      <div class="phase-num">04</div>
+      <div class="phase-title">The Pitch</div>
+      <div class="phase-tag">Memorize + practice</div>
+    </div>
+    <div class="phase-body">
+      <div class="pitch-card">
+        <div class="pitch-label">Professional Intro · ~25–30 sec</div>
+        <div class="pitch-text" id="introText">Hi, I'm Ishaan Naik — I'm a Master's student in Civil Engineering at Purdue, concentrating in Construction Engineering and Management, graduating this December. I'm currently working as a Construction Engineer at Hill International here in West Lafayette, and before Purdue I spent two years as a Construction Engineer in India managing QA/QC and site operations across multiple work fronts. I'm looking for full-time opportunities in field or project engineering, and I'd love to learn more about the kind of projects your team is working on.</div>
+        <button class="copy-btn" data-target="introText">Copy Intro</button>
+      </div>
+      <div class="pitch-card">
+        <div class="pitch-label">Value Pitch · adapt [Company] and [Role] per booth</div>
+        <div class="pitch-text" id="valueText">I've spent the last 3+ years doing hands-on construction engineering — currently at Hill International handling submittals, RFIs, and field QA/QC, and before that managing multi-front site operations in India. I'm finishing my Master's at Purdue focused on Construction Engineering Management, so I bring both the field execution side and the schedule/cost management side. I'd bring that same ownership mentality to a [Field Engineer / Project Engineer] role with [Company Name].</div>
+        <button class="copy-btn" data-target="valueText">Copy Value Pitch</button>
+      </div>
+      <div class="item"><div class="box"></div><label>Practiced both out loud, unscripted, at least 3 times before Sept 15</label></div>
+      <div class="item"><div class="box"></div><label>Have a company-specific line ready for each priority target</label></div>
+    </div>
+  </div>
+
+  <!-- PHASE 05 -->
+  <div class="phase">
+    <div class="phase-head">
+      <div class="phase-num">05</div>
+      <div class="phase-title">At the Booth</div>
+      <div class="phase-tag">Sept 15–17</div>
+    </div>
+    <div class="phase-body">
+      <div class="item"><div class="box"></div><label>Lead with the intro before handing over the resume</label></div>
+      <div class="item"><div class="box"></div><label>Ask directly about full-time Field Engineer / Project Engineer / Project Controls openings — he's graduating Dec 2026, not looking for an internship</label></div>
+      <div class="item"><div class="box"></div><label>Mention Purdue coursework, Hill International, and the India experience explicitly</label></div>
+      <div class="item"><div class="box"></div><label>Get the recruiter's name and email or LinkedIn — every single conversation</label></div>
+      <div class="item"><div class="box"></div><label>Step aside and jot 2–3 notes immediately after each booth, before the next one</label></div>
+    </div>
+  </div>
+
+  <!-- PHASE 06 -->
+  <div class="phase">
+    <div class="phase-head">
+      <div class="phase-num">06</div>
+      <div class="phase-title">Follow-Up</div>
+      <div class="phase-tag">The part that closes offers</div>
+    </div>
+    <div class="phase-body">
+      <div class="item"><div class="box"></div><label>Send a personalized thank-you email within 24–48 hours to every recruiter met</label></div>
+      <div class="item"><div class="box"></div><label>Reference something specific from the actual conversation in each email</label></div>
+      <div class="item"><div class="box"></div><label>Connect on LinkedIn the same day</label></div>
+      <div class="item"><div class="box"></div><label>Log company, contact, role, and follow-up date in a tracking sheet</label></div>
+      <div class="item"><div class="box"></div><label>Follow up again after 1–2 weeks if there's been no response</label></div>
+      <div class="note">Most conversations get lost right here — not at the booth.</div>
+    </div>
+  </div>
+
+</div>
+
+<footer>Sheet 1 of 1 — IR Career Fair 2026</footer>
+
+<script>
+  document.querySelectorAll('.item .box').forEach(box=>{
+    box.addEventListener('click', ()=>{
+      box.classList.toggle('checked');
+      box.parentElement.classList.toggle('checked');
+      updateGauge();
+    });
+  });
+
+  function updateGauge(){
+    const boxes = document.querySelectorAll('.item .box');
+    const checked = document.querySelectorAll('.item .box.checked');
+    const pct = boxes.length ? Math.round((checked.length/boxes.length)*100) : 0;
+    document.getElementById('gaugeFill').style.width = pct + '%';
+    document.getElementById('gaugePct').textContent = pct + '%';
+  }
+
+  document.querySelectorAll('.copy-btn').forEach(btn=>{
+    btn.addEventListener('click', ()=>{
+      const text = document.getElementById(btn.dataset.target).textContent;
+      navigator.clipboard.writeText(text).then(()=>{
+        const original = btn.textContent;
+        btn.textContent = 'Copied';
+        btn.classList.add('copied');
+        setTimeout(()=>{ btn.textContent = original; btn.classList.remove('copied'); }, 1500);
+      });
+    });
+  });
+
+  updateGauge();
+</script>
+
+</body>
+</html>
